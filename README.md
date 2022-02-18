@@ -11,4 +11,4 @@ Compiles on Linux using VSCode/CMakeTools.
 
 Uses the resource graphics and texture from the SFML.net OpenGL Examples.
 
-![screenshot](https://github.com/davemoore22/learnopenglsfml/blob/master/screenshot.png)
+![screenshot](https://github.com/davemoore22/learnopenglsfml/blob/master/Screenshot.png)
