@@ -33,7 +33,7 @@ int main() {
 	while (!exit) {
 
 		// Create the main window
-		std::string blurb{"SFML/LearnOpenGL Tutorial #1: Hello Triangle"};
+		std::string blurb{"SFML/LearnOpenGL Tutorial #2: Hello Rectangle"};
 		sf::ContextSettings cs{24};
 		sf::RenderWindow window(
 			sf::VideoMode(800, 600), blurb, sf::Style::Default, cs);

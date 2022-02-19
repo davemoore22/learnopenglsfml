@@ -40,8 +40,10 @@ namespace OpenGLTutorial {
 		GLint _fragment_shader;
 		GLint _shader_program;
 		std::vector<GLfloat> _vertices;
+		std::vector<unsigned int> _indices;
 		GLuint _vertex_buffer_object;
-		GLuint _vertext_array_object;
+		GLuint _vertex_array_object;
+		GLuint _element_buffer_object;
 
 		auto _bind_configure_vertices() -> void;
 		auto _compile_shaders() -> bool;

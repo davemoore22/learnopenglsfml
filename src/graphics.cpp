@@ -42,8 +42,9 @@ OpenGLTutorial::Graphics::Graphics() {
 OpenGLTutorial::Graphics::~Graphics() {
 
 	// Do Tidy Up
-	glDeleteVertexArrays(1, &_vertext_array_object);
+	glDeleteVertexArrays(1, &_vertex_array_object);
 	glDeleteBuffers(1, &_vertex_buffer_object);
+	glDeleteBuffers(1, &_element_buffer_object);
 	glDeleteProgram(_shader_program);
 }
 
@@ -51,8 +52,8 @@ auto OpenGLTutorial::Graphics::render() -> void {
 
 	// Draw our Triangle!
 	glUseProgram(_shader_program);
-	glBindVertexArray(_vertext_array_object);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glBindVertexArray(_vertex_array_object);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 // Compile OpenGL Shaders
@@ -111,34 +112,51 @@ auto OpenGLTutorial::Graphics::_link_shaders() -> bool {
 auto OpenGLTutorial::Graphics::_setup_vertices() -> void {
 
 	_vertices.clear();
+	_indices.clear();
 
-	// Left Point of Triangle
-	_vertices.push_back(-0.5f);
-	_vertices.push_back(-0.5f);
+	// Vertices
+	_vertices.push_back(0.5f);
+	_vertices.push_back(0.5f);
 	_vertices.push_back(0.0f);
 
-	// Right Point of Triangle
 	_vertices.push_back(0.5f);
 	_vertices.push_back(-0.5f);
 	_vertices.push_back(0.0f);
 
-	// Top Point of Triangle
+	_vertices.push_back(-0.5f);
+	_vertices.push_back(-0.5f);
 	_vertices.push_back(0.0f);
+
+	_vertices.push_back(-0.5f);
 	_vertices.push_back(0.5f);
 	_vertices.push_back(0.0f);
+
+	// Indices start from 0
+	_indices.push_back(0);
+	_indices.push_back(1);
+	_indices.push_back(3);
+	_indices.push_back(1);
+	_indices.push_back(2);
+	_indices.push_back(3);
 }
 
 // From https://learnopengl.com/Getting-started/Hello-Triangle
 auto OpenGLTutorial::Graphics::_bind_configure_vertices() -> void {
 
-	glGenVertexArrays(1, &_vertext_array_object);
+	glGenVertexArrays(1, &_vertex_array_object);
 	glGenBuffers(1, &_vertex_buffer_object);
+	glGenBuffers(1, &_element_buffer_object);
 
-	glBindVertexArray(_vertext_array_object);
+	glBindVertexArray(_vertex_array_object);
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer_object);
 	glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(GLfloat),
 		&_vertices.front(), GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _element_buffer_object);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+		_indices.size() * sizeof(unsigned int), &_indices.front(),
+		GL_STATIC_DRAW);
 
 	glVertexAttribPointer(
 		0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void *)0);
